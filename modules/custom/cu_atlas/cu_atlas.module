@@ -203,6 +203,11 @@ function cu_atlas_atlas_statistics() {
     $statistics_data['bundles'] = _get_bundle_stats();
   }
 
+  if (_get_module_stats()) {
+    // Add report of stats related to bundles.
+    $statistics_data['modules'] = _get_module_stats();
+  }
+
   return $statistics_data;
 }
 
@@ -270,6 +275,27 @@ function _get_bundle_stats() {
   // Concatenate strings in $other_bundles array to create one long string.
   $bundle_stats['other'] = implode("; ", $other_bundles);
   return $bundle_stats;
+}
+
+/**
+ * Callback function to return statistics relating to modules.
+ *
+ * @return array
+ *   List of enabled modules as an array.
+ */
+function _get_module_stats() {
+  $module_stats = array();
+  // Get enabled bundles.
+  $enabled_modules = db_query("SELECT name, schema_version FROM {system} WHERE type = 'module' AND status = 1 AND name NOT LIKE '%_bundle' ORDER BY weight ASC, name ASC")->fetchAllAssoc('name');
+  // Turn returned object into an array.
+
+  foreach ($enabled_modules as $key => $module) {
+      $module_stats[$module->name] = array(
+        'schema_version' => $module->schema_version,
+      );
+  }
+
+  return $module_stats;
 }
 
 /**
