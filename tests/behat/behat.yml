@@ -106,11 +106,15 @@ default:
         my_session:
           goutte:
             guzzle_parameters:
+              verify: false
               ssl.certificate_authority: false
       selenium2: ~
       javascript_session: selenium2
       browser_name: firefox
+      base_url: https://express.local/p16091c5310e
     Drupal\DrupalExtension:
+      drupal:
+        drupal_root: '/data/web/express/p16091c5310e'
       blackbox: ~
       api_driver: 'drupal'
       subcontexts:
