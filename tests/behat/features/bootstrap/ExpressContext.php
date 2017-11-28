@@ -99,7 +99,7 @@ class ExpressContext extends RawDrupalContext implements SnippetAcceptingContext
   public function assertAuthenticatedByRole($role) {
     // Load custom created user.
     // User has the same name as the role.
-    $user = user_load_by_name($role);
+    $user = getUserManager->setCurrentUser($role);
 
     // Translate to what is expected in $this->user.
     $this->user = (object) array(
