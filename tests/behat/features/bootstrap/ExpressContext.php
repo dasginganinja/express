@@ -418,33 +418,14 @@ class ExpressContext extends RawDrupalContext implements SnippetAcceptingContext
    * @When /^I create a "(?P<content_type>(?:[^"]|\\")*)" node with the title "(?P<title>(?:[^"]|\\")*)"$/
    */
   public function imAtAWithTheTitle($content_type, $title) {
-    // Create Node.
-    $node = new stdClass();
-    $node->title = $title;
-    $node->type = $content_type;
-    node_object_prepare($node);
-    node_save($node);
 
-    // Go to node page.
-    // Using vistPath() instead of visit() method since it adds base URL to relative path.
-    $this->visitPath('node/' . $node->nid);
   }
 
   /**
    * @When /^I create a "(?P<bean_type>(?:[^"]|\\")*)" block with the label "(?P<label>(?:[^"]|\\")*)"$/
    */
   public function imAtAWithTheLabel($bean_type, $label) {
-    // Create Block.
-    $values = array(
-      'label' => $label,
-      'type'  => $bean_type,
-    );
-    $entity = entity_create('bean', $values);
-    $saved_entity = entity_save('bean', $entity);
 
-    // Go to bean page.
-    // Using vistPath() instead of visit() method since it adds base URL to relative path.
-    $this->visitPath('block/' . $entity->delta);
   }
 
   /**

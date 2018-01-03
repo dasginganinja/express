@@ -19,8 +19,14 @@ function cu_testing_core_install() {
   // Don't add query logging since it adds memory overhead.
   // variable_set('performance_query', 1);
 
+  // @todo Disable modules that might be enabled if turning this on after site install.
+
   // Add test users.
   _cu_testing_core_add_users();
+
+  // @todo Actually add test content.
+  // Add testing content.
+  //_cu_testing_core_add_content();
 }
 
 /**
@@ -74,4 +80,47 @@ function _cu_testing_core_add_users() {
     // The first parameter is sent blank so a new user is created.
     user_save('', $new_user);
   }
+}
+
+/**
+ * Adds fixture data for test runs.
+ */
+function _cu_testing_core_add_content() {
+
+
+  // I create a "photo_gallery" node with the title "New Gallery".
+
+  // I create a "facebook_like_button" block with the label "Facebook Like Block".
+
+  // I create a "facebook_activity" block with the label "Facebook Activity Block".
+
+  // I create a "twitter_block" block with the label "Twitter Block".
+
+  // I create a "social_links" block with the label "Social Links Block".
+
+  // Create Node.
+  $node = new stdClass();
+  $node->title = $title;
+  $node->type = $content_type;
+  node_object_prepare($node);
+  node_save($node);
+
+  // Go to node page.
+  // Using vistPath() instead of visit() method since it adds base URL to relative path.
+  $this->visitPath('node/' . $node->nid);
+
+
+
+  // Create Block.
+  $values = array(
+    'label' => $label,
+    'type'  => $bean_type,
+  );
+  $entity = entity_create('bean', $values);
+  $saved_entity = entity_save('bean', $entity);
+
+  // Go to bean page.
+  // Using vistPath() instead of visit() method since it adds base URL to relative path.
+  $this->visitPath('block/' . $entity->delta);
+
 }
