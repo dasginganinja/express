@@ -66,19 +66,24 @@ function cu_helpscout_preprocess_page(&$vars) {
     $beacon = '!function(e,o,n){window.HSCW=o,window.HS=n,n.beacon=n.beacon||{};var t=n.beacon;t.userConfig={},t.readyQueue=[],t.config=function(e){this.userConfig=e},t.ready=function(e){this.readyQueue.push(e)},o.config={docs:{enabled:!0,baseUrl:"//university-of-colorado-boulder-docs.helpscoutdocs.com/"},contact:{enabled:!0,formId:"3ac3ec6d-c002-11e7-b466-0ec85169275a"}};var r=e.getElementsByTagName("script")[0],c=e.createElement("script");c.type="text/javascript",c.async=!0,c.src="https://djtflbt20bdde.cloudfront.net/",r.parentNode.insertBefore(c,r)}(document,window.HSCW||{},window.HS||{});';
 
     $config = 'HS.beacon.config({ modal:1, showContactFields:true, attachment: true });
-
-    HS.beacon.ready(function() {
-      HS.beacon.identify({
-        name: \'' . $name . '\',
-        email: \'' . $user->mail . '\',
-        user_email: \'' . $user->mail . '\',
-        roles: \'' . $roles . '\',
-        site_name: \'' . $site_name . '\',
-        site_url: \'' . $base_url . '\',
+      HS.beacon.ready(function() {
+        HS.beacon.identify({
+          name: \''. $name. '\',
+          email: \''. $user->mail. '\',
+          $$roles$$: \''. $roles. '\',
+          $$site_name$$: \''. $site_name. '\',
+          $$site_url$$: \''. $base_url. '\',
+          $$user_name$$: \''. $name. '\',
+          $$user_email$$: \''. $user->mail. '\',
+          $$organization_level_one$$: \''. 'one' . '\',
+          $$organization_level_two$$: \''. 'two' . '\',
+          $$organization_level_three$$: \''. 'three' . '\',
+          $$organization_level_four$$: \''. 'four' . '\',
+          $$topic$$: \'24596\',
+        });
       });
-    });
-
-    jQuery("#navbar-bar a.navbar-icon-help").click(function(event) { event.preventDefault(); HS.beacon.open(); });';
+  
+      jQuery("#navbar-bar a.navbar-icon-help").click(function(event) { event.preventDefault(); HS.beacon.open(); });';
 
     drupal_add_js($beacon, array(
       'type' => 'inline',
